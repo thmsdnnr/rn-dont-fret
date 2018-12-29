@@ -9,6 +9,7 @@
 import React, { Component } from "react";
 import { Platform, Text, View } from "react-native";
 import styled from "styled-components/native";
+import Orientation from "react-native-orientation-locker";
 
 import Fretboard from "./components/fretboard/Fretboard";
 
@@ -24,6 +25,25 @@ export default class App extends Component<Props> {
   constructor(props) {
     super(props);
   }
+
+  _onOrientationDidChange = orientation => {
+    if (orientation !== this.state.screenOrientation) {
+      this.setState({ screenOrientation: orientation });
+    }
+  };
+
+  componentWillMount() {
+    var initial = Orientation.getInitialOrientation();
+    this.setState({ screenOrientation: initial });
+  }
+
+  componentDidMount() {
+    Orientation.addOrientationListener(this._onOrientationDidChange);
+  }
+
+  componentWillUnmount = () => {
+    Orientation.removeOrientationListener(this._onOrientationDidChange);
+  };
 
   render() {
     return (
