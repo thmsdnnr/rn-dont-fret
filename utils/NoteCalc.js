@@ -47,8 +47,10 @@ const nextNote = function*(baseNote, direction = "UP") {
 };
 
 export default (generateNoteRange = (baseNote, initialOffset = 0, noteCt) => {
+  // TODO: cache result in asyncStorage so we only ever have to generate once for a given tuning and num notes
+  // or just store a JSON file of strings and note values for different instruments.
   let ct = 0;
-  let result = [];
+  let result = initialOffset === 0 ? [baseNote] : [];
   const nextNoteGenerator = nextNote(baseNote);
   while (initialOffset > 1) {
     nextNoteGenerator.next();

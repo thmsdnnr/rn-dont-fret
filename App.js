@@ -61,8 +61,6 @@ export default class App extends Component<Props> {
       flex-wrap: wrap;
     `;
     let tuning = ["E2", "A2", "D3", "G3", "B3", "E4"]; // low string to low string, 6 -> 1
-    // if (this.state.screenOrientation.indexOf("P") === -1)
-      // tuning = tuning.reverse();
     return (
       <StyledSafe>
         <Fretboard

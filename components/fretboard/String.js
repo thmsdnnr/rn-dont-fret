@@ -1,7 +1,7 @@
 /**
  * String
  *
- * A String contains Notes and is contained by a Fretboard.
+ * A String contains noteList and is contained by a Fretboard.
  * TODO: When in Landscape, will be vertical 100%.
  * @format
  * @flow
@@ -13,7 +13,6 @@ import Nut from "./Nut";
 import Note from "./Note";
 import Fret from "./Fret";
 import styled from "styled-components/native";
-import generateNoteRange from "../../utils/NoteCalc.js";
 
 type Props = {};
 export default class String extends Component<Props> {
@@ -27,34 +26,34 @@ export default class String extends Component<Props> {
       align-items: center;
     `;
     const noteList = [];
-    const noteRange = generateNoteRange(
-      this.props.baseNote,
-      this.props.startFret,
-      this.props.numFrets
-    );
-    if (this.props.startFret === 0) {
-      noteList.push(
-        <Note
-          key={`string_${this.props.stringNum}_note_open`}
-          orientation={this.props.orientation}
-          isOpen={true}
-          noteValue={this.props.baseNote}
-        />,
-        <Nut key="open_nut" orientation={this.props.orientation} />
-      );
-    }
-    for (let i = 0; i < this.props.numFrets; i++) {
-      noteList.push(
-        <Note
-          key={`string_${this.props.stringNum}_note_${i}`}
-          orientation={this.props.orientation}
-          noteValue={noteRange[i]}
-        />,
-        <Fret
-          key={`string_${this.props.stringNum}_fret_${i}`}
-          orientation={this.props.orientation}
-        />
-      );
+    for (let i = 0; i < this.props.noteList.length; i++) {
+      if (i === 0 && this.props.includesOpen === true) {
+        noteList.push(
+          <Note
+            key={`string_${this.props.stringNum}_note_open`}
+            orientation={this.props.orientation}
+            isOpen={true}
+            noteValue={this.props.noteList[0].note}
+            isActive={this.props.noteList[0].isActive}
+            isNameDisplayed={this.props.noteList[0].isNameDisplayed}
+          />,
+          <Nut key="open_nut" orientation={this.props.orientation} />
+        );
+      } else {
+        noteList.push(
+          <Note
+            key={`string_${this.props.stringNum}_note_${i}`}
+            orientation={this.props.orientation}
+            noteValue={this.props.noteList[i].note}
+            isActive={this.props.noteList[i].isActive}
+            isNameDisplayed={this.props.noteList[i].isNameDisplayed}
+          />,
+          <Fret
+            key={`string_${this.props.stringNum}_fret_${i}`}
+            orientation={this.props.orientation}
+          />
+        );
+      }
     }
     return <NoteContainer>{noteList}</NoteContainer>;
   }
