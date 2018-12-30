@@ -8,12 +8,18 @@
  */
 
 import React, { Component } from "react";
-import { Platform, TouchableOpacity, View, Text } from "react-native";
+import { Platform, TouchableHighlight, View, Text } from "react-native";
 import styled from "styled-components/native";
 import RightWrong from "./RightWrong";
 
 type Props = {};
 export default class String extends Component<Props> {
+  constructor(props) {
+    super(props);
+    this.state = {
+      chosenGuess: ""
+    };
+  }
   render() {
     const NoteGuessContainer = styled.View`
       flex: 1;
@@ -32,7 +38,7 @@ export default class String extends Component<Props> {
       padding-top: 16;
     `;
 
-    let GuessOption = styled.TouchableOpacity`
+    let GuessOption = styled.TouchableHighlight`
       flex: 1;
       height: 64;
       width: 64;
@@ -79,8 +85,8 @@ export default class String extends Component<Props> {
         {notes.map((note, idx) => {
           return (
             <GuessOption
-              onPressed={() => {
-                // doing stuff
+              onPress={() => {
+                this.setState({ chosenGuess: note });
               }}
               key={`${note}_option_${idx}`}
             >
@@ -88,6 +94,7 @@ export default class String extends Component<Props> {
             </GuessOption>
           );
         })}
+        <Text>{this.state.chosenGuess}</Text>
       </NoteGuessContainer>
     );
   }
