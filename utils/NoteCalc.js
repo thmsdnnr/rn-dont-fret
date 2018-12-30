@@ -46,10 +46,14 @@ const nextNote = function*(baseNote, direction = "UP") {
   }
 };
 
-export default (generateNoteRange = (baseNote, noteCt) => {
+export default (generateNoteRange = (baseNote, initialOffset = 0, noteCt) => {
   let ct = 0;
   let result = [];
   const nextNoteGenerator = nextNote(baseNote);
+  while (initialOffset > 1) {
+    nextNoteGenerator.next();
+    initialOffset--;
+  }
   while (ct < noteCt) {
     result.push(nextNoteGenerator.next().value);
     ct++;
