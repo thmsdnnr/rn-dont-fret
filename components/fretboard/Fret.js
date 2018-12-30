@@ -10,19 +10,11 @@
 
 import React, { Component } from "react";
 import { View } from "react-native";
-import styled from "styled-components/native";
-
-const FretStyle = styled.View`
-  flex: 0;
-  min-height: 4;
-  background-color: gold;
-  width: 100%;
-  z-index: 1;
-`;
+import HR from "../generics/PrimaryAxisHR";
 
 type Props = {};
 export default class Fret extends Component<Props> {
   render() {
-    return <FretStyle />;
+    return <HR color="gold" orientation={this.props.orientation} size={4} />;
   }
 }

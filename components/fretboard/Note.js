@@ -21,13 +21,25 @@ const StyledText = styled.View`
   border-radius: 16;
 `;
 
-const NoteText = styled.Text`
-  color: #fafafa;
-`;
-
 type Props = {};
 export default class Note extends Component<Props> {
   render() {
+    let NoteText = styled.Text`
+      color: #fafafa;
+    `;
+    if (Platform.OS !== "ios") {
+      if (this.props.orientation === "LL") {
+        NoteText = styled.Text`
+          transform: rotate(90deg);
+          color: #fafafa;
+        `;
+      } else if (this.props.orientation === "LR") {
+        NoteText = styled.Text`
+          transform: rotate(-90deg);
+          color: #fafafa;
+        `;
+      }
+    }
     const StyledView = styled.View`
       flex: 1;
       background-color: ${this.props && this.props.isActive === true
@@ -35,11 +47,13 @@ export default class Note extends Component<Props> {
         : "#ffffff"};
       justify-content: center;
       align-items: center;
-      border: 1px solid silver;
+      ${this.props && !this.props.isOpen ? "border: 1px solid silver" : ""};
     `;
     return (
       <StyledView>
-        <StyledText><NoteText>{this.props.noteValue}</NoteText></StyledText>
+        <StyledText>
+          <NoteText>{this.props.noteValue}</NoteText>
+        </StyledText>
       </StyledView>
     );
   }

@@ -9,22 +9,14 @@
  */
 
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
-import styled from "styled-components/native";
-
-const NutStyle = styled.View`
-  flex: 0;
-  background-color: saddlebrown;
-  position: absolute;
-  min-height: 8;
-  width: 100%;
-  top: 0;
-  z-index: 4;
-`;
+import { View } from "react-native";
+import HR from "../generics/PrimaryAxisHR";
 
 type Props = {};
 export default class Nut extends Component<Props> {
   render() {
-    return <NutStyle />;
+    return (
+      <HR color="saddlebrown" orientation={this.props.orientation} size={8} />
+    );
   }
 }

@@ -8,35 +8,57 @@
  */
 
 import React, { Component } from "react";
-import { TouchableOpacity, View, Text } from "react-native";
+import { Platform, TouchableOpacity, View, Text } from "react-native";
 import styled from "styled-components/native";
 import RightWrong from "./RightWrong";
-
-const NoteGuessContainer = styled.View`
-  flex: 1;
-  flex-flow: column;
-  justify-content: flex-start;
-  align-items: center;
-  border: 1px solid gold;
-  width: 50;
-  padding-top: 16;
-  padding-bottom: 16;
-`;
-
-const GuessOption = styled.TouchableOpacity`
-  flex: 1;
-  width: 64;
-  height: 64;
-  border-radius: 8;
-  border: 1px solid black;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 8;
-`;
 
 type Props = {};
 export default class String extends Component<Props> {
   render() {
+    const NoteGuessContainer = styled.View`
+      flex: 1;
+      ${Platform.OS === "ios" && this.props.orientation.indexOf("P") == -1
+        ? "flex-direction: row"
+        : "flex-direction: column"};
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid gold;
+      ${Platform.OS === "ios" && this.props.orientation.indexOf("P") === -1
+        ? "min-height: 64"
+        : "min-width: 64"};
+      ${Platform.OS !== "ios" ? "flex-direction: column" : ""};
+      ${Platform.OS !== "ios" ? "width: 50" : ""};
+      border: 1px solid green;
+      padding-top: 16;
+    `;
+
+    let GuessOption = styled.TouchableOpacity`
+      flex: 1;
+      height: 64;
+      width: 64;
+      border-radius: 4;
+      border: 1px solid black;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 8;
+      margin-left: 8;
+    `;
+    let StyledText = styled.Text`
+      color: #000000;
+    `;
+    if (Platform.OS !== "ios") {
+      if (this.props.orientation === "LL") {
+        StyledText = styled.Text`
+          transform: rotate(90deg);
+          color: #000000;
+        `;
+      } else if (this.props.orientation === "LR") {
+        StyledText = styled.Text`
+          transform: rotate(-90deg);
+          color: #000000;
+        `;
+      }
+    }
     const notes = [
       "C",
       "C#",
@@ -62,11 +84,10 @@ export default class String extends Component<Props> {
               }}
               key={`${note}_option_${idx}`}
             >
-              <Text key={`${note}_text_${idx}`}>{note}</Text>
+              <StyledText key={`${note}_text_${idx}`}>{note}</StyledText>
             </GuessOption>
           );
         })}
-        <RightWrong display={false} displayValue="HOORAY!" />
       </NoteGuessContainer>
     );
   }
