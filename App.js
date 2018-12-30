@@ -7,17 +7,20 @@
  */
 
 import React, { Component } from "react";
-import { Platform, Text, View } from "react-native";
+import { SafeAreaView, Platform, Text, View } from "react-native";
 import styled from "styled-components/native";
 import Orientation from "react-native-orientation-locker";
 
 import Fretboard from "./components/fretboard/Fretboard";
+import NoteGuess from "./components/NoteGuess";
 
-const StyledContainer = styled.View`
+const StyledSafe = styled.SafeAreaView`
   flex: 1;
-  justify-content: center;
-  align-items: center;
-  background-color: #f5fcff;
+  align-items: stretch;
+  flex-direction: row;
+  border: 1px solid red;
+  padding-left: 24;
+  padding-right: 24;
 `;
 
 type Props = {};
@@ -46,10 +49,12 @@ export default class App extends Component<Props> {
   };
 
   render() {
+    const tuning = ["E2", "A2", "D3", "G3", "B3", "E4"]; // low string to low string, 6 -> 1
     return (
-      <StyledContainer>
-        <Fretboard tuning={"EADGBE"} startFret={0} endFret={12} />
-      </StyledContainer>
+      <StyledSafe>
+        <Fretboard tuning={tuning} startFret={0} endFret={12} />
+        <NoteGuess />
+      </StyledSafe>
     );
   }
 }

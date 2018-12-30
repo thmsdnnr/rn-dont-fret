@@ -20,21 +20,13 @@ import String from "./String";
 import Nut from "./Nut";
 import styled from "styled-components/native";
 
-const StyledSafe = styled.SafeAreaView`
-  flex: 1;
-  width: 95%;
-  flex-direction: column;
-  align-items: flex-start;
-`;
-
 const Container = styled.View`
-  flex: 1;
-  width: 75%;
+  flex: 2;
   flex-direction: row;
   justify-content: space-between;
   background-color: #f5fcff;
-  margin-top: 24;
-  margin-bottom: 48;
+  border: 1px solid green;
+  margin-left: 24;
 `;
 
 type Props = {};
@@ -46,18 +38,17 @@ export default class Fretboard extends Component<Props> {
       theStrings.push(
         <String
           key={`string_${i}`}
+          baseNote={this.props.tuning[i]}
           stringNum={i}
           startFret={this.props.startFret}
           endFret={this.props.endFret}
         />
       );
     return (
-      <StyledSafe>
-        <Container>
-          <Nut />
-          {theStrings}
-        </Container>
-      </StyledSafe>
+      <Container>
+        <Nut />
+        {theStrings}
+      </Container>
     );
   }
 }
