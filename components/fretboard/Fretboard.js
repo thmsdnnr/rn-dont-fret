@@ -33,7 +33,7 @@ export default class Fretboard extends Component<Props> {
             return {
               note: n,
               isActive: false,
-              isNameDisplayed: true
+              isNameDisplayed: false
             };
           }
         )
@@ -57,10 +57,24 @@ export default class Fretboard extends Component<Props> {
     this._toggleNoteParam(stringIdx, fretIdx, "isActive");
   };
 
-  componentDidMount() {
-    // this._toggleNoteName(0, 0);
-    // this._toggleNoteActive(1, 1);
-  }
+  _randomString = () => Math.floor(Math.random() * this.state.noteArray.length);
+  _randomNoteOnString = stringIdx =>
+    Math.floor(Math.random() * this.state.noteArray[stringIdx].length);
+
+  componentDidMount = () => {
+    const interval = setInterval(() => {
+      const randString = this._randomString();
+      const randNote = this._randomNoteOnString(randString);
+      this._toggleNoteActive(randString, randNote);
+    }, 2000);
+    this.setState({
+      interval: interval
+    });
+  };
+
+  componentWillUnmount = () => {
+    clearInterval(this.state.interval);
+  };
 
   render() {
     const Container = styled.View`
