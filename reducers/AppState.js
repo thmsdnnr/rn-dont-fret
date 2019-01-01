@@ -1,4 +1,6 @@
-const AppState = (state = initialState, action) => {
+import InitialState from "../store/InitialState";
+
+export const AppState = (state = InitialState, action) => {
   switch (action.type) {
     case "DEVICE_ROTATE":
       return Object.assign(state, { orientation: action.orientation });
@@ -6,5 +8,3 @@ const AppState = (state = initialState, action) => {
       return state;
   }
 };
-
-export default AppState;

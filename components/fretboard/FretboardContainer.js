@@ -2,13 +2,19 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Fretboard from "./Fretboard";
 
-const mapStateToProps = state => ({
-  tuning: state.tuning,
-  includesOpen: state.includesOpen,
-  noteArray: state.noteArray,
-  orientation: state.orientation,
-  startFret: state.startFret
-});
+const mapStateToProps = state => {
+  const { AppState, Note } = state;
+  const { tuning, includesOpen, noteArray, startFret, numFrets } = Note;
+  const { orientation } = AppState;
+  return {
+    tuning,
+    includesOpen,
+    noteArray,
+    startFret,
+    numFrets,
+    orientation
+  };
+};
 
 const mapDispatchToProps = dispatch => ({
   increment: () => {

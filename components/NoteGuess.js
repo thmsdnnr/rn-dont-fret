@@ -17,15 +17,13 @@ export default class String extends Component<Props> {
   render() {
     const StyledNoteGuess = styled.View`
       flex: 1;
-      ${Platform.OS === "ios" && this.props.orientation.indexOf("P") == -1
-        ? "flex-direction: row"
-        : "flex-direction: column"};
       justify-content: space-between;
       align-items: center;
       border: 1px solid gold;
+      flex-direction: row;
       ${Platform.OS === "ios" && this.props.orientation.indexOf("P") === -1
-        ? "min-height: 64"
-        : "min-width: 64"};
+        ? "flex-direction: row; min-height: 64; width: 100%"
+        : "flex-direction: column; min-width: 64; height: 100%;"};
       ${Platform.OS !== "ios" ? "flex-direction: column" : ""};
       ${Platform.OS !== "ios" ? "width: 50" : ""};
       border: 1px solid green;
@@ -34,8 +32,10 @@ export default class String extends Component<Props> {
 
     let GuessOption = styled.TouchableHighlight`
       flex: 1;
-      height: 64;
-      width: 64;
+      ${Platform.OS === "ios" && this.props.orientation.indexOf("P") === -1
+        ? "height: 100%; min-width: 32;"
+        : "width: 100%; min-height: 32;"};
+      height: 32;
       border-radius: 4;
       border: 1px solid black;
       justify-content: center;

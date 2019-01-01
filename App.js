@@ -46,6 +46,13 @@ export default class App extends Component<Props> {
 
   componentDidMount() {
     Orientation.addOrientationListener(this._onOrientationDidChange);
+    setInterval(() => {
+      store.dispatch({
+        type: "NOTE_ON",
+        stringIdx: Math.floor(Math.random() * 6),
+        fretIdx: Math.floor(Math.random() * 12)
+      });
+    }, 2500);
   }
 
   componentWillUnmount = () => {

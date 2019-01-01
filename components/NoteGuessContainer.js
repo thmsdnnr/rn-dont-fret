@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import NoteGuess from "./NoteGuess";
 
 const mapStateToProps = state => ({
-  orientation: state.orientation
+  orientation: state.AppState.orientation
 });
 
 const mapDispatchToProps = dispatch => ({

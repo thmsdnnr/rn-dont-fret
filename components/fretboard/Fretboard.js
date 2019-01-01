@@ -39,16 +39,19 @@ export default class Fretboard extends Component<Props> {
         : "margin-left: 24"};
     `;
     const theStrings = [];
-    for (let i = 0; i < this.props.noteArray.length; i++)
-      theStrings.push(
-        <String
-          key={`string_${i}`}
-          includesOpen={this.props.startFret === 0}
-          noteList={this.props.noteArray[i]}
-          orientation={this.props.orientation}
-          stringNum={i}
-        />
-      );
-    return <Container>{theStrings}</Container>;
+    for (let i = 0; i < this.props.noteArray.length; i++) theStrings.push();
+    return (
+      <Container>
+        {this.props.noteArray.map((string, idx) => (
+          <String
+            key={`string_${idx}`}
+            includesOpen={this.props.startFret}
+            noteList={this.props.noteArray[idx]}
+            orientation={this.props.orientation}
+            stringNum={idx}
+          />
+        ))}
+      </Container>
+    );
   }
 }

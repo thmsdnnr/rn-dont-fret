@@ -26,31 +26,42 @@ export default class String extends Component<Props> {
       align-items: center;
     `;
     const noteList = [];
+    const orientation = this.props.orientation;
     for (let i = 0; i < this.props.noteList.length; i++) {
+      const {
+        note,
+        isHighlighted,
+        highlightColor,
+        isNameDisplayed
+      } = this.props.noteList[i];
+      const noteKey = `string_${this.props.stringNum}_note_${i}`;
       if (i === 0 && this.props.includesOpen === true) {
         noteList.push(
           <Note
-            key={`string_${this.props.stringNum}_note_open`}
-            orientation={this.props.orientation}
+            key={noteKey}
+            orientation={orientation}
             isOpen={true}
-            noteValue={this.props.noteList[0].note}
-            isActive={this.props.noteList[0].isActive}
-            isNameDisplayed={this.props.noteList[0].isNameDisplayed}
+            noteValue={note}
+            isHighlighted={isHighlighted}
+            highlightColor={highlightColor}
+            isNameDisplayed={isNameDisplayed}
           />,
-          <Nut key="open_nut" orientation={this.props.orientation} />
+          <Nut key="open_nut" orientation={orientation} />
         );
       } else {
         noteList.push(
           <Note
-            key={`string_${this.props.stringNum}_note_${i}`}
-            orientation={this.props.orientation}
-            noteValue={this.props.noteList[i].note}
-            isActive={this.props.noteList[i].isActive}
-            isNameDisplayed={this.props.noteList[i].isNameDisplayed}
+            key={noteKey}
+            orientation={orientation}
+            isOpen={false}
+            noteValue={note}
+            isHighlighted={isHighlighted}
+            highlightColor={highlightColor}
+            isNameDisplayed={isNameDisplayed}
           />,
           <Fret
             key={`string_${this.props.stringNum}_fret_${i}`}
-            orientation={this.props.orientation}
+            orientation={orientation}
           />
         );
       }
