@@ -7,12 +7,17 @@
  */
 
 import React, { Component } from "react";
+import { compose, createStore } from "redux";
+import { Provider } from "react-redux";
+import rootReducer from "./reducers";
+
 import { SafeAreaView, Platform, Text, View } from "react-native";
 import styled from "styled-components/native";
 import Orientation from "react-native-orientation-locker";
 
-import Fretboard from "./components/fretboard/Fretboard";
-import NoteGuess from "./components/NoteGuess";
+import FretboardContainer from "./components/fretboard/FretboardContainer";
+import NoteGuessContainer from "./components/NoteGuessContainer";
+import store from "./store/store";
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -21,13 +26,14 @@ export default class App extends Component<Props> {
   }
 
   _onOrientationDidChange = orientation => {
-    if (this._oMap[orientation] !== this.state.screenOrientation) {
-      this.setState({ screenOrientation: this._oMap[orientation] });
-    }
+    store.dispatch({
+      type: "DEVICE_ROTATE",
+      orientation: this._oMap[orientation]
+    });
   };
 
   _oMap = {
-    "PORTRAIT": "P",
+    PORTRAIT: "P",
     "PORTRAIT-UPSIDEDOWN": "PU",
     "LANDSCAPE-LEFT": "LL",
     "LANDSCAPE-RIGHT": "LR"
@@ -50,10 +56,11 @@ export default class App extends Component<Props> {
     const StyledSafe = styled.SafeAreaView`
       flex: 1;
       align-items: center;
-      ${Platform.OS === 'ios' && this.state.screenOrientation.indexOf("P") === -1
+      ${Platform.OS === "ios" &&
+      this.state.screenOrientation.indexOf("P") === -1
         ? "flex-direction: column"
         : "flex-direction: row"};
-      ${Platform.OS !== 'ios' ? "flex-direction: row" : ""};
+      ${Platform.OS !== "ios" ? "flex-direction: row" : ""};
       border: 1px solid red;
       padding-left: 24;
       padding-right: 24;
@@ -63,13 +70,10 @@ export default class App extends Component<Props> {
     let tuning = ["E2", "A2", "D3", "G3", "B3", "E4"]; // low string to low string, 6 -> 1
     return (
       <StyledSafe>
-        <Fretboard
-          orientation={this.state.screenOrientation}
-          tuning={tuning}
-          startFret={0}
-          numFrets={12}
-        />
-        <NoteGuess orientation={this.state.screenOrientation} />
+        <Provider store={store}>
+          <FretboardContainer />
+          <NoteGuessContainer />
+        </Provider>
       </StyledSafe>
     );
   }

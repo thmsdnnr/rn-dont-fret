@@ -14,14 +14,8 @@ import RightWrong from "./RightWrong";
 
 type Props = {};
 export default class String extends Component<Props> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      chosenGuess: ""
-    };
-  }
   render() {
-    const NoteGuessContainer = styled.View`
+    const StyledNoteGuess = styled.View`
       flex: 1;
       ${Platform.OS === "ios" && this.props.orientation.indexOf("P") == -1
         ? "flex-direction: row"
@@ -81,12 +75,12 @@ export default class String extends Component<Props> {
     ];
     let noteList = [];
     return (
-      <NoteGuessContainer>
+      <StyledNoteGuess>
         {notes.map((note, idx) => {
           return (
             <GuessOption
               onPress={() => {
-                this.setState({ chosenGuess: note });
+                this.props.onClick(note);
               }}
               key={`${note}_option_${idx}`}
             >
@@ -94,8 +88,7 @@ export default class String extends Component<Props> {
             </GuessOption>
           );
         })}
-        <Text>{this.state.chosenGuess}</Text>
-      </NoteGuessContainer>
+      </StyledNoteGuess>
     );
   }
 }

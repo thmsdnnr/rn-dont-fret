@@ -18,64 +18,10 @@ import React, { Component } from "react";
 import { Platform, Text, SafeAreaView, View } from "react-native";
 import String from "./String";
 import Nut from "./Nut";
-import generateNoteRange from "../../utils/NoteCalc.js";
 import styled from "styled-components/native";
 
 type Props = {};
 export default class Fretboard extends Component<Props> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      tuning: this.props.tuning,
-      noteArray: this.props.tuning.map((note, idx) =>
-        generateNoteRange(note, this.props.startFret, this.props.numFrets).map(
-          n => {
-            return {
-              note: n,
-              isActive: false,
-              isNameDisplayed: false
-            };
-          }
-        )
-      )
-    };
-  }
-
-  _toggleNoteParam = (stringIdx, fretIdx, paramName) => {
-    const newNoteArray = this.state.noteArray.slice();
-    newNoteArray[stringIdx][fretIdx][paramName] = !newNoteArray[stringIdx][
-      fretIdx
-    ][paramName];
-    this.setState({ noteArray: newNoteArray });
-  };
-
-  _toggleNoteName = (stringIdx, fretIdx) => {
-    this._toggleNoteParam(stringIdx, fretIdx, "isNameDisplayed");
-  };
-
-  _toggleNoteActive = (stringIdx, fretIdx) => {
-    this._toggleNoteParam(stringIdx, fretIdx, "isActive");
-  };
-
-  _randomString = () => Math.floor(Math.random() * this.state.noteArray.length);
-  _randomNoteOnString = stringIdx =>
-    Math.floor(Math.random() * this.state.noteArray[stringIdx].length);
-
-  componentDidMount = () => {
-    const interval = setInterval(() => {
-      const randString = this._randomString();
-      const randNote = this._randomNoteOnString(randString);
-      this._toggleNoteActive(randString, randNote);
-    }, 2000);
-    this.setState({
-      interval: interval
-    });
-  };
-
-  componentWillUnmount = () => {
-    clearInterval(this.state.interval);
-  };
-
   render() {
     const Container = styled.View`
       flex: 4;
@@ -92,14 +38,13 @@ export default class Fretboard extends Component<Props> {
         ? "margin-top: 24"
         : "margin-left: 24"};
     `;
-    const numStrings = this.props.tuning.length || 0;
     const theStrings = [];
-    for (let i = 0; i < this.state.noteArray.length; i++)
+    for (let i = 0; i < this.props.noteArray.length; i++)
       theStrings.push(
         <String
           key={`string_${i}`}
           includesOpen={this.props.startFret === 0}
-          noteList={this.state.noteArray[i]}
+          noteList={this.props.noteArray[i]}
           orientation={this.props.orientation}
           stringNum={i}
         />
