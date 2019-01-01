@@ -8,15 +8,10 @@
  * @flow
  */
 
-import React, { Component } from "react";
-import { View } from "react-native";
-import HR from "../generics/PrimaryAxisHR";
+import React from 'react';
+import HR from '../generics/PrimaryAxisHR';
 
-type Props = {};
-export default class Nut extends Component<Props> {
-  render() {
-    return (
-      <HR color="saddlebrown" orientation={this.props.orientation} size={8} />
-    );
-  }
+export default function Nut(props) {
+  const { orientation } = props;
+  return <HR color="saddlebrown" orientation={orientation} size={8} />;
 }

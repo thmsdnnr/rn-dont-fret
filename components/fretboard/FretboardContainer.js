@@ -1,6 +1,13 @@
+/**
+ * FretboardContainer
+ *
+ * Redux container for Fretboard component.
+ * @format
+ * @flow
+ */
+
 import { connect } from 'react-redux';
 import Fretboard from './Fretboard';
-import React from 'react';
 
 const mapStateToProps = state => {
   const { AppState, Note } = state;

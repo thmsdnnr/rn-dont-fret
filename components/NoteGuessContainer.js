@@ -1,6 +1,13 @@
+/**
+ * NoteGuessContainer
+ *
+ * Redux container for NoteGuess component.
+ * @format
+ * @flow
+ */
+
 import { connect } from 'react-redux';
 import NoteGuess from './NoteGuess';
-import React from 'react';
 
 const mapStateToProps = state => ({
   orientation: state.AppState.orientation

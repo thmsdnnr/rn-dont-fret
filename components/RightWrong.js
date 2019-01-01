@@ -1,15 +1,14 @@
 /**
- * NoteGuess
+ * RightWrong
  *
- * A NoteGuess contains note options to click on.
- * TODO: When in Landscape, will be horizontal, not vertical.
+ * A RightWrong displays a visual indicator of the correctness of a note guess.
  * @format
  * @flow
  */
 
-import React, { Component } from "react";
-import { View, Text } from "react-native";
-import styled from "styled-components/native";
+import React from 'react';
+import { Text } from 'react-native';
+import styled from 'styled-components/native';
 
 const RightWrongView = styled.View`
   flex: 1;
@@ -22,18 +21,14 @@ const RightWrongView = styled.View`
 `;
 
 // TODO: show an SVG for right/wrong font
-
-type Props = {};
-export default class RightWrong extends Component<Props> {
-  render() {
-    if (this.props && this.props.display && this.props.displayValue) {
-      return (
-        <RightWrongView>
-          <Text>{this.props.displayValue}</Text>
-        </RightWrongView>
-      );
-    } else {
-      return <RightWrongView />
-    }
-  }
+export default function RightWrong(props) {
+  const { display, displayValue } = props;
+  return (
+    display &&
+    displayValue && (
+      <RightWrongView>
+        <Text>{this.props.displayValue}</Text>
+      </RightWrongView>
+    )
+  );
 }

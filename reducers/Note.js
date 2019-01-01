@@ -1,9 +1,11 @@
-import InitialState from "../store/InitialState";
+import InitialState from '../store/InitialState';
 
 const setKeysOnNote = (state, action, updates) => {
   const noteArrayCopy = state.noteArray.slice();
   const { stringIdx, fretIdx } = action;
-  for (key in updates) noteArrayCopy[stringIdx][fretIdx][key] = updates[key];
+  Object.keys(updates).forEach(key => {
+    noteArrayCopy[stringIdx][fretIdx][key] = updates[key];
+  });
   return noteArrayCopy;
 };
 
@@ -24,10 +26,10 @@ const updatesForAction = {
   }
 };
 
-export const Note = (state = InitialState, action) => {
+export default function Note(state = InitialState, action) {
   if (!updatesForAction[action.type]) return state;
   return {
     ...state,
     noteArray: setKeysOnNote(state, action, updatesForAction[action.type])
   };
-};
+}

@@ -6,6 +6,7 @@
  * Given a tuning, I know number of strings.
  * Given a startFret and endFret, know how many "notes" to display per string.
  *
+ * TODO: potentially consider an image or SVG rather than a CSS implementation for this
  * TODO: make notes tappable
  * TODO: background color options, actually play the note
  * TODO: when screen is horizontal, adjust orientation of scene.
@@ -20,7 +21,7 @@ import styled from 'styled-components/native';
 import String from './String';
 
 export default function Fretboard(props) {
-  const { orientation, noteArray, startFret } = props;
+  const { orientation, noteArray, startFret, includesOpen } = props;
   const Container = styled.View`
     flex: 4;
     ${Platform.OS === 'ios' && orientation.indexOf('P') === -1
@@ -43,7 +44,7 @@ export default function Fretboard(props) {
       {noteArray.map((string, idx) => (
         <String
           key={`string_${idx}`}
-          includesOpen={startFret}
+          includesOpen={includesOpen}
           noteList={noteArray[idx]}
           orientation={orientation}
           stringNum={idx}

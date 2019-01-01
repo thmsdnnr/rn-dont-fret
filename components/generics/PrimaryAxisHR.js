@@ -6,28 +6,22 @@
  * @flow
  */
 
-import React, { Component } from "react";
-import { Platform, View } from "react-native";
-import styled from "styled-components/native";
+import React from 'react';
+import { Platform } from 'react-native';
+import styled from 'styled-components/native';
 
-type Props = {};
-export default class HR extends Component<Props> {
-  render() {
-    heightRule = `min-height: ${this.props.size}`;
-    widthRule= `width: 100%`;
-    const HRStyle = styled.View`
-      flex: 0;
-      ${Platform.OS === 'ios' && this.props.orientation.indexOf("P") !== -1
-        ? "min-height: "
-        : "min-width: "} ${this.props.size};
-      background-color: ${this.props.color};
-      ${this.props.orientation.indexOf("P") !== -1
-        ? "width: 100%"
-        : "height: 100%"};
-      ${Platform.OS !== 'ios' ? heightRule : ""};
-      ${Platform.OS !== 'ios' ? widthRule : ""};
-      z-index: 1;
-    `;
-    return <HRStyle />;
-  }
+export default function HR(props) {
+  const { size, orientation, color } = props;
+  const HRStyle = styled.View`
+    flex: 0;
+    ${Platform.OS === 'ios' && orientation.indexOf('P') !== -1
+      ? `min-height: ${size}`
+      : `min-width: ${size}`};
+    background-color: ${color};
+    ${orientation.indexOf('P') !== -1 ? 'width: 100%' : 'height: 100%'};
+    ${Platform.OS !== 'ios' ? `min-height: ${size};` : ''};
+    ${Platform.OS !== 'ios' ? `width: 100%;` : ''};
+    z-index: 1;
+  `;
+  return <HRStyle />;
 }

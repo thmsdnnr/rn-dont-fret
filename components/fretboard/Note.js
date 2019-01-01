@@ -7,23 +7,32 @@
  * @flow
  */
 
-import React from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
-import styled from "styled-components/native";
+import React from 'react';
+import { Platform } from 'react-native';
+import styled from 'styled-components/native';
 
 export default function Note(props) {
-  const { orientation } = props;
-  let highlightColor = props.highlightColor || "#000000";
+  const {
+    noteValue,
+    isOpen,
+    isHighlighted,
+    highlightColor,
+    isNameDisplayed,
+    orientation
+  } = props;
+  const textColor = '#111111';
+  const highlightedTextColor = '#ffffff';
+  const highlightedBackgroundColor = '#000000';
   const BaseNoteText = styled.Text`
-    color: ${props.isHighlighted ? "#ffffff" : "#111111"};
+    color: ${isHighlighted ? highlightedTextColor : textColor};
   `;
   const androidNoteTextRotateRule = {
-    LL: "transform: rotate(90deg);",
-    LR: "transform: rotate(-90deg);"
+    LL: 'transform: rotate(90deg);',
+    LR: 'transform: rotate(-90deg);'
   };
   let NoteText = BaseNoteText;
   if (
-    Platform.OS !== "ios" &&
+    Platform.OS !== 'ios' &&
     androidNoteTextRotateRule[orientation] !== undefined
   ) {
     NoteText = styled(BaseNoteText)`
@@ -34,14 +43,15 @@ export default function Note(props) {
     flex: 1;
     justify-content: center;
     align-items: center;
-    ${!props.isOpen ? "border: 1px solid silver" : ""};
+    ${!isOpen ? 'border: 1px solid silver' : ''};
   `;
   const StyledText = styled.View`
     flex: 0;
     justify-content: center;
     align-items: center;
-    ${props.isHighlighted === true
-      ? `background-color: ${highlightColor} border: 1px solid #cccccc;`
+    ${isHighlighted === true
+      ? `background-color: ${highlightColor ||
+          highlightedBackgroundColor} border: 1px solid #cccccc;`
       : `background-color: #ffffff; border: 1px solid #111111;`};
     min-height: 32;
     min-width: 32;
@@ -50,9 +60,7 @@ export default function Note(props) {
   return (
     <StyledView>
       <StyledText>
-        {props.isNameDisplayed && props.noteValue && (
-          <NoteText>{props.noteValue}</NoteText>
-        )}
+        {isNameDisplayed && noteValue && <NoteText>{noteValue}</NoteText>}
       </StyledText>
     </StyledView>
   );
