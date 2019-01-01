@@ -25,6 +25,10 @@ const initialState = {
         isNameDisplayed: false
       }))
     )
+  },
+  TrainingSession: {
+    rightCount: 0,
+    wrongCount: 0
   }
 };
 
