@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import NoteGuess from "./NoteGuess";
+import { connect } from 'react-redux';
+import NoteGuess from './NoteGuess';
+import React from 'react';
 
 const mapStateToProps = state => ({
   orientation: state.AppState.orientation
@@ -8,7 +8,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onClick: note => {
-    dispatch({ type: "CHOOSE_NOTE", note });
+    dispatch({ type: 'CHOOSE_NOTE', note });
   }
 });
 

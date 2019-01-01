@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import Fretboard from "./Fretboard";
+import { connect } from 'react-redux';
+import Fretboard from './Fretboard';
+import React from 'react';
 
 const mapStateToProps = state => {
   const { AppState, Note } = state;
@@ -18,13 +18,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   increment: () => {
-    dispatch({ type: "INCREMENT" });
+    dispatch({ type: 'INCREMENT' });
   },
   decrement: () => {
-    dispatch({ type: "DECREMENT" });
+    dispatch({ type: 'DECREMENT' });
   },
   reset: () => {
-    dispatch({ type: "RESET" });
+    dispatch({ type: 'RESET' });
   }
 });
 
