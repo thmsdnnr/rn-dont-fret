@@ -57,11 +57,6 @@ export default class App extends React.Component {
 
   componentDidMount() {
     Orientation.addOrientationListener(this.onOrientationDidChange);
-    setInterval(() => {
-      store.dispatch({
-        type: 'RANDOM_NOTE_ON'
-      });
-    }, 2500);
   }
 
   onOrientationDidChange = orientation => {

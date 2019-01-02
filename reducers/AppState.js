@@ -13,7 +13,7 @@ export default function AppState(state = InitialState, action) {
   switch (action.type) {
     case 'DEVICE_ROTATE':
       return { ...state, orientation: action.orientation };
-    case 'HEADER_HIDE':
+    case 'HEADER_HIDE': // TODO: can probably eliminate these.
       return { ...state, isHeaderHidden: true };
     case 'HEADER_SHOW':
       return { ...state, isHeaderHidden: false };

@@ -8,16 +8,19 @@
  */
 
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
 export default function Note(props) {
   const {
-    noteValue,
+    noteName,
     isHighlighted,
     highlightColor,
     isNameDisplayed,
-    orientation
+    orientation,
+    onPress,
+    string,
+    fret
   } = props;
   const textColor = '#111111';
   const highlightedTextColor = '#ffffff';
@@ -40,7 +43,7 @@ export default function Note(props) {
       ${androidNoteTextRotateRule[orientation]}
     `;
   }
-  const StyledView = styled.View`
+  const StyledView = styled.TouchableOpacity`
     flex: 1;
     justify-content: center;
     align-items: center;
@@ -59,9 +62,9 @@ export default function Note(props) {
     border-radius: 16;
   `;
   return (
-    <StyledView>
+    <StyledView onPress={() => onPress({ noteName, string, fret })}>
       <StyledText>
-        {isNameDisplayed && noteValue && <NoteText>{noteValue}</NoteText>}
+        {isNameDisplayed && noteName && <NoteText>{noteName}</NoteText>}
       </StyledText>
     </StyledView>
   );

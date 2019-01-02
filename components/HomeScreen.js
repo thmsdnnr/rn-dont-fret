@@ -26,7 +26,7 @@ export default class HomeScreen extends React.Component {
         <SafeAreaView
           style={{
             flex: 1,
-            flexDirection: 'column',
+            flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-evenly'
           }}

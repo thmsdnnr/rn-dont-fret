@@ -11,7 +11,14 @@ import Fretboard from './Fretboard';
 
 const mapStateToProps = state => {
   const { AppState, Note } = state;
-  const { tuning, includesOpen, noteArray, startFret, numFrets } = Note;
+  const {
+    tuning,
+    includesOpen,
+    noteArray,
+    startFret,
+    numFrets,
+    noteToGuess
+  } = Note;
   const { orientation } = AppState;
   return {
     tuning,
@@ -19,13 +26,20 @@ const mapStateToProps = state => {
     noteArray,
     startFret,
     numFrets,
+    noteToGuess,
     orientation
   };
 };
 
 const mapDispatchToProps = dispatch => ({
-  increment: () => {
-    dispatch({ type: 'INCREMENT' });
+  dispatch: (action, obj) => {
+    dispatch({ type: action }, obj);
+  },
+  notePressed: note => {
+    dispatch({ type: 'NOTE_PRESSED', note });
+  },
+  randomNote: () => {
+    dispatch({ type: 'RANDOM_NOTE_ON' });
   },
   decrement: () => {
     dispatch({ type: 'DECREMENT' });

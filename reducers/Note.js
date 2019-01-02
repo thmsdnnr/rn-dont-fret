@@ -13,7 +13,7 @@ const setKeysOnNote = (state, action, updates) => {
 const updatesForAction = {
   RANDOM_NOTE_ON: {
     isHighlighted: true,
-    isNameDisplayed: true
+    isNameDisplayed: false
   },
   NOTE_ON: {
     isHighlighted: true,
@@ -29,26 +29,41 @@ const updatesForAction = {
   HIGHLIGHT_OFF: {
     isHighlighted: false
   },
-  UPDATE_NOTE_ARRAY: {}
+  UPDATE_NOTE_ARRAY: {},
+  RANDOM_NOTE_TO_GUESS: {}
 };
+
+const getRandomString = state =>
+  Math.floor(Math.random() * (state.noteArray.length - 1));
+const getRandomFretForString = (string, state) =>
+  Math.floor(Math.random() * (state.noteArray[string].length - 1));
 
 export default function Note(state = InitialState, action) {
   if (!updatesForAction[action.type]) return state;
   switch (action.type) {
     case 'RANDOM_NOTE_ON':
-      const randomString = Math.floor(
-        Math.random() * (state.noteArray.length - 1)
-      );
-      const randomFret = Math.floor(
-        Math.random() * (state.noteArray[randomString].length - 1)
-      );
-      const obj = {
-        stringIdx: randomString,
-        fretIdx: randomFret
-      };
+      const rString = getRandomString(state);
       return {
         ...state,
-        noteArray: setKeysOnNote(state, obj, updatesForAction[action.type])
+        noteArray: setKeysOnNote(
+          state,
+          {
+            stringIdx: rString,
+            fretIdx: getRandomFretForString(rString, state)
+          },
+          updatesForAction[action.type]
+        )
+      };
+    case 'RANDOM_NOTE_TO_GUESS':
+      const rNote = getRandomString(state);
+      const rFret = getRandomFretForString(rNote, state);
+      return {
+        ...state,
+        noteToGuess: {
+          stringIdx: rNote,
+          fretIdx: rFret,
+          noteName: state.noteArray[rNote][rFret]['note']
+        }
       };
     case 'UPDATE_NOTE_ARRAY':
       const { startFret, numFrets } = action;

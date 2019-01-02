@@ -15,7 +15,7 @@ import Note from './Note';
 import Fret from './Fret';
 
 export default function String(props) {
-  const { orientation, noteList, stringNum, includesOpen } = props;
+  const { orientation, noteList, stringNum, includesOpen, notePressed } = props;
   const NoteContainer = styled.View`
     flex: 1;
     ${Platform.OS === 'ios' && orientation.indexOf('P') === -1
@@ -34,12 +34,15 @@ export default function String(props) {
       noteComponentList.push(
         <Note
           key={noteKey}
+          string={stringNum}
+          fret={i}
           orientation={orientation}
           isOpen
-          noteValue={note}
+          noteName={note}
           isHighlighted={isHighlighted}
           highlightColor={highlightColor}
           isNameDisplayed={isNameDisplayed}
+          onPress={notePressed}
         />,
         <Nut key="open_nut" orientation={orientation} />
       );
@@ -47,12 +50,15 @@ export default function String(props) {
       noteComponentList.push(
         <Note
           key={noteKey}
+          string={stringNum}
+          fret={i}
           orientation={orientation}
           isOpen={false}
-          noteValue={note}
+          noteName={note}
           isHighlighted={isHighlighted}
           highlightColor={highlightColor}
-          isNameDisplayed={isNameDisplayed}
+          isNameDisplayed
+          onPress={notePressed}
         />,
         <Fret key={`string_${stringNum}_fret_${i}`} orientation={orientation} />
       );

@@ -14,42 +14,19 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const CountText = styled.Text`
   font-family: 'Lato-Bold';
   font-size: 24;
-  margin-left: 8;
+  margin-left: 36;
   margin-right: 36;
-  color: #ffffff;
+  color: #000000;
 `;
-
-const androidNoteTextRotateRule = {
-  LL: 'rotate(90deg)',
-  LR: 'rotate(-90deg)'
-};
 
 export default function RightWrong(props) {
   const { rightCount, wrongCount, orientation } = props;
-  const RightWrongView = styled.View`
-    flex-direction: row;
-    border: 1px solid black;
-    height: 100%;
-    min-height: 48;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    margin-top: 8;
-    margin-left: 36;
-    margin-bottom: 16;
-    ${Platform.OS !== 'ios' &&
-    androidNoteTextRotateRule[orientation] !== undefined
-      ? `transform: ${
-          androidNoteTextRotateRule[orientation]
-        }; flex-direction: column;`
-      : ''}
-  `;
   return (
-    <RightWrongView>
-      <Icon name="check" size={24} color="#090" />
+    <Text style={{ height: 36 }}>
+      <Icon name="check" size={32} color="#090" />
       <CountText>{rightCount || 0}</CountText>
-      <Icon name="times" size={24} color="#900" />
+      <Icon name="times" size={32} color="#900" />
       <CountText>{wrongCount || 0}</CountText>
-    </RightWrongView>
+    </Text>
   );
 }
