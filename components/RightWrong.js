@@ -16,6 +16,7 @@ const CountText = styled.Text`
   font-size: 24;
   margin-left: 8;
   margin-right: 36;
+  color: #ffffff;
 `;
 
 const androidNoteTextRotateRule = {
@@ -26,26 +27,28 @@ const androidNoteTextRotateRule = {
 export default function RightWrong(props) {
   const { rightCount, wrongCount, orientation } = props;
   const RightWrongView = styled.View`
-    flex: 0.2;
-    flex-flow: row;
+    flex-direction: row;
+    border: 1px solid black;
+    height: 100%;
+    min-height: 48;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
-    margin-top: 0;
+    margin-top: 8;
     margin-left: 36;
     margin-bottom: 16;
     ${Platform.OS !== 'ios' &&
     androidNoteTextRotateRule[orientation] !== undefined
       ? `transform: ${
           androidNoteTextRotateRule[orientation]
-        }; flex-flow: column;`
+        }; flex-direction: column;`
       : ''}
   `;
   return (
     <RightWrongView>
-      <Icon name="check" size={42} color="#090" />
+      <Icon name="check" size={24} color="#090" />
       <CountText>{rightCount || 0}</CountText>
-      <Icon name="times" size={42} color="#900" />
+      <Icon name="times" size={24} color="#900" />
       <CountText>{wrongCount || 0}</CountText>
     </RightWrongView>
   );

@@ -15,8 +15,10 @@
     "react": "16.6.3",
     "react-native": "0.57.8",
     "react-native-elements": "^0.19.1",
+    "react-native-gesture-handler": "^1.0.12",
     "react-native-orientation-locker": "^1.1.1",
     "react-native-vector-icons": "^6.1.0",
+    "react-navigation": "^3.0.9",
     "react-redux": "^6.0.0",
     "redux": "^4.0.1",
     "styled-components": "^4.1.3"

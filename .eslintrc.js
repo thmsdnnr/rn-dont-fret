@@ -13,7 +13,8 @@ module.exports = {
     'object-curly-newline': 'off',
     'avoid-escape': true,
     'allow-template-literals': true,
-    indent: 'off'
+    indent: 'off',
+    'react/prefer-stateless-function': 'off'
   },
   globals: {
     fetch: false
