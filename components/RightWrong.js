@@ -7,28 +7,49 @@
  */
 
 import React from 'react';
-import { Text } from 'react-native';
+import { Platform, View, Text } from 'react-native';
 import styled from 'styled-components/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const RightWrongView = styled.View`
-  flex: 1;
-  flex-flow: column;
-  justify-content: flex-start;
-  align-items: center;
-  margin-top: 4;
-  width: 48
-  height: 48;
+const CountText = styled.Text`
+  font-family: 'Lato-Bold';
+  font-size: 24;
+  margin-left: 8;
+  margin-right: 36;
+  color: #ffffff;
 `;
 
-// TODO: show an SVG for right/wrong font
+const androidNoteTextRotateRule = {
+  LL: 'rotate(90deg)',
+  LR: 'rotate(-90deg)'
+};
+
 export default function RightWrong(props) {
-  const { display, displayValue } = props;
+  const { rightCount, wrongCount, orientation } = props;
+  const RightWrongView = styled.View`
+    flex-direction: row;
+    border: 1px solid black;
+    height: 100%;
+    min-height: 48;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 8;
+    margin-left: 36;
+    margin-bottom: 16;
+    ${Platform.OS !== 'ios' &&
+    androidNoteTextRotateRule[orientation] !== undefined
+      ? `transform: ${
+          androidNoteTextRotateRule[orientation]
+        }; flex-direction: column;`
+      : ''}
+  `;
   return (
-    display &&
-    displayValue && (
-      <RightWrongView>
-        <Text>{this.props.displayValue}</Text>
-      </RightWrongView>
-    )
+    <RightWrongView>
+      <Icon name="check" size={24} color="#090" />
+      <CountText>{rightCount || 0}</CountText>
+      <Icon name="times" size={24} color="#900" />
+      <CountText>{wrongCount || 0}</CountText>
+    </RightWrongView>
   );
 }

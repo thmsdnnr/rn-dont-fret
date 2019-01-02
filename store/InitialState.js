@@ -17,6 +17,7 @@ const initialState = {
     tuning: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'],
     startFret: 0,
     numFrets: 12,
+    numStrings: 6,
     includesOpen: true,
     noteArray: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'].map(note =>
       generateNoteRange(note, 0, 12).map(n => ({
@@ -25,6 +26,10 @@ const initialState = {
         isNameDisplayed: false
       }))
     )
+  },
+  TrainingSession: {
+    rightCount: 0,
+    wrongCount: 0
   }
 };
 

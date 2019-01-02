@@ -14,7 +14,6 @@ import styled from 'styled-components/native';
 export default function Note(props) {
   const {
     noteValue,
-    isOpen,
     isHighlighted,
     highlightColor,
     isNameDisplayed,
@@ -25,6 +24,8 @@ export default function Note(props) {
   const highlightedBackgroundColor = '#000000';
   const BaseNoteText = styled.Text`
     color: ${isHighlighted ? highlightedTextColor : textColor};
+    font-family: 'Lato-Bold';
+    font-size: 16;
   `;
   const androidNoteTextRotateRule = {
     LL: 'transform: rotate(90deg);',
@@ -43,7 +44,7 @@ export default function Note(props) {
     flex: 1;
     justify-content: center;
     align-items: center;
-    ${!isOpen ? 'border: 1px solid silver' : ''};
+    ${isHighlighted === true ? 'elevation: 1; transform: scale(1.02);' : ''};
   `;
   const StyledText = styled.View`
     flex: 0;
@@ -51,8 +52,8 @@ export default function Note(props) {
     align-items: center;
     ${isHighlighted === true
       ? `background-color: ${highlightColor ||
-          highlightedBackgroundColor} border: 1px solid #cccccc;`
-      : `background-color: #ffffff; border: 1px solid #111111;`};
+          highlightedBackgroundColor} border: 1px solid #111111;`
+      : `background-color: #ffffff; border: 1px solid #cccccc;`};
     min-height: 32;
     min-width: 32;
     border-radius: 16;

@@ -1,24 +1,45 @@
-/**
- * Don't Fret
- * Learn the fretboard and improve your stringed skills!
- *
- * @format
- * @flow
- */
+// In App.js in a new project
 
-import React, { Component } from 'react';
+import React from 'react';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+import Orientation from 'react-native-orientation-locker';
 import { Provider } from 'react-redux';
 
-import { SafeAreaView, Platform } from 'react-native';
-import styled from 'styled-components/native';
-import Orientation from 'react-native-orientation-locker';
+import HomeScreenContainer from './components/HomeScreenContainer';
+import SettingsScreen from './components/SettingsScreen';
+import FretboardScreenContainer from './FretboardScreenContainer';
 
-import FretboardContainer from './components/fretboard/FretboardContainer';
-import NoteGuessContainer from './components/NoteGuessContainer';
 import store from './store/store';
 
-type Props = {};
-export default class App extends Component<Props> {
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreenContainer,
+    Fretboard: FretboardScreenContainer,
+    Settings: SettingsScreen
+  },
+  {
+    initialRouteName: 'Home',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#455a64'
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        fontFamily: 'Lato'
+      }
+    }
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends React.Component {
+  static navigationOptions = {
+    title: 'Home'
+  };
+
   orientationMap = {
     PORTRAIT: 'P',
     'PORTRAIT-UPSIDEDOWN': 'PU',
@@ -28,21 +49,32 @@ export default class App extends Component<Props> {
 
   componentWillMount() {
     const initial = Orientation.getInitialOrientation();
-    this.setState({ screenOrientation: this.orientationMap[initial] });
+    store.dispatch({
+      type: 'DEVICE_ROTATE',
+      orientation: this.orientationMap[initial]
+    });
   }
 
   componentDidMount() {
     Orientation.addOrientationListener(this.onOrientationDidChange);
     setInterval(() => {
       store.dispatch({
-        type: 'NOTE_ON',
-        stringIdx: Math.floor(Math.random() * 6),
-        fretIdx: Math.floor(Math.random() * 12)
+        type: 'RANDOM_NOTE_ON'
       });
     }, 2500);
   }
 
   onOrientationDidChange = orientation => {
+    if (this.orientationMap[orientation].indexOf('P') === -1) {
+      store.dispatch({
+        // Hide the header in landscape mode.
+        type: 'HEADER_HIDE'
+      });
+    } else {
+      store.dispatch({
+        type: 'HEADER_SHOW'
+      });
+    }
     store.dispatch({
       type: 'DEVICE_ROTATE',
       orientation: this.orientationMap[orientation]
@@ -54,27 +86,11 @@ export default class App extends Component<Props> {
   };
 
   render() {
-    const { screenOrientation } = this.state;
-    const StyledSafe = styled.SafeAreaView`
-      flex: 1;
-      align-items: center;
-      ${Platform.OS === 'ios' && screenOrientation.indexOf('P') === -1
-        ? 'flex-direction: column'
-        : 'flex-direction: row'};
-      ${Platform.OS !== 'ios' ? 'flex-direction: row' : ''};
-      border: 1px solid red;
-      padding-left: 24;
-      padding-right: 24;
-      margin-left: 24;
-      flex-wrap: wrap;
-    `;
+    const navigationPersistenceKey = __DEV__ ? 'NavigationStateDEV' : null;
     return (
-      <StyledSafe>
-        <Provider store={store}>
-          <FretboardContainer />
-          <NoteGuessContainer />
-        </Provider>
-      </StyledSafe>
+      <Provider store={store}>
+        <AppContainer persistenceKey={navigationPersistenceKey} />
+      </Provider>
     );
   }
 }

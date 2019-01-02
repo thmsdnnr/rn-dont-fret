@@ -12,7 +12,11 @@ import InitialState from '../store/InitialState';
 export default function AppState(state = InitialState, action) {
   switch (action.type) {
     case 'DEVICE_ROTATE':
-      return Object.assign(state, { orientation: action.orientation });
+      return { ...state, orientation: action.orientation };
+    case 'HEADER_HIDE':
+      return { ...state, isHeaderHidden: true };
+    case 'HEADER_SHOW':
+      return { ...state, isHeaderHidden: false };
     default:
       return state;
   }
