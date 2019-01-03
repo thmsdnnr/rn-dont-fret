@@ -41,7 +41,7 @@ export default function String(props) {
           noteName={note}
           isHighlighted={isHighlighted}
           highlightColor={highlightColor}
-          isNameDisplayed={isNameDisplayed}
+          isNameDisplayed
           onPress={notePressed}
         />,
         <Nut key="open_nut" orientation={orientation} />

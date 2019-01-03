@@ -11,7 +11,8 @@ import MainApp from './MainApp';
 
 const mapStateToProps = state => ({
   screenOrientation: state.AppState.orientation,
-  noteToGuess: state.Note.noteToGuess
+  noteToGuess: state.Note.noteToGuess,
+  notesRemaining: state.TrainingSession.notesRemaining
 });
 
 const mapDispatchToProps = dispatch => ({

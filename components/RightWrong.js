@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { Platform, View, Text } from 'react-native';
+import { Text } from 'react-native';
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -20,7 +20,7 @@ const CountText = styled.Text`
 `;
 
 export default function RightWrong(props) {
-  const { rightCount, wrongCount, orientation } = props;
+  const { rightCount, wrongCount } = props;
   return (
     <Text style={{ height: 36 }}>
       <Icon name="check" size={32} color="#090" />

@@ -15,12 +15,12 @@ const initialState = {
   },
   Note: {
     noteToGuess: {},
-    tuning: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'],
+    tuning: ['E4', 'B3', 'G3', 'D3', 'A2', 'E2'],
     startFret: 0,
     numFrets: 12,
     numStrings: 6,
     includesOpen: true,
-    noteArray: ['E2', 'A2', 'D3', 'G3', 'B3', 'E4'].map(note =>
+    noteArray: ['E4', 'B3', 'G3', 'D3', 'A2', 'E2'].map(note =>
       generateNoteRange(note, 0, 12).map(n => ({
         note: n,
         isActive: false,
